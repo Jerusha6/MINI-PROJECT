@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log Details</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <style>
+      body {
+        background-image: url(design4.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .container {
+        max-width: 800px !important;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: transparent;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #2c3e50;
+        margin-bottom: 30px;
+        text-align: center;
+        font-weight: 600;
+      }
+      .log-item {
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        padding: 25px;
+        transition: all 0.3s ease;
+        background-color: transparent;
+      }
+      .log-item:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+      }
+      .log-item h3 {
+        margin-top: 0;
+        color: #000000;
+        font-weight: 600;
+      }
+      .log-detail {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 5px;
+        transition: all 0.2s ease;
+        border: 1px solid #e0e0e0;
+      }
+      .log-detail:hover {
+        background-color: #f0f0f0;
+      }
+      .btn {
+        display: inline-block;
+        padding: 0.7rem 1.5rem;
+        margin: 0.5rem 0.5rem 0.5rem 0;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        color: #fff;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      #addLogBtn {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+      }
+      #addLogBtn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(52, 152, 219, 0.3);
+      }
+
+      .fas,
+      .far {
+        margin-right: 8px;
+        color: #3498db;
+      }
+
+       .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="main-navbar">
+      <!-- Navigation content will be loaded here -->
+    </nav>
+    <div class="container animate__animated animate__fadeIn">
+      <h1 class="mb-4 text-center">Log Details 📋</h1>
+      <div id="logDetailsContainer"></div>
+       <div class="button-container">
+        <button id="addComplaintBtn" class="btn btn-primary">
+          <i class="fas fa-plus"></i> Add New Complaint
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="goBack()">
+          Go Back
+        </button>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        function getQueryParams() {
+          const params = new URLSearchParams(window.location.search);
+          return {
+            date: params.get("date"),
+            shift: params.get("shift"),
+          };
+        }
+
+        function loadLogDetails(date, shift) {
+          $.ajax({
+            url: `/api/logdetails?date=${encodeURIComponent(
+              date
+            )}&shift=${encodeURIComponent(shift)}`,
+            method: "GET",
+            success: function (data) {
+              $("#logDetailsContainer").empty();
+              $("#logDetailsContainer").append(`
+                <div class="log-item animate__animated animate__fadeInUp">
+                  <h3>Log on ${data.date} - ${data.shift} Shift</h3>
+                  <div class="log-detail">
+                    <i class="fas fa-user"></i> <strong>Shift Engineer:</strong> ${data.shift_engineer}
+                  </div>
+                  <div class="log-detail">
+                    <i class="fas fa-server"></i> <strong>App Server:</strong> ${data.appserver} - ${data.appserverRemarks}
+                  </div>
+                  <div class="log-detail">
+                    <i class="fas fa-database"></i> <strong>DB Server:</strong> ${data.dbserver} - ${data.dbserverRemarks}
+                  </div>
+                  <div class="log-detail">
+                    <i class="fas fa-shield-alt"></i> <strong>Firewall 1:</strong> ${data.firewall1Status} - ${data.firewall1Remarks}
+                  </div>
+                  <div class="log-detail">
+                    <i class="fas fa-shield-alt"></i> <strong>Firewall 2:</strong> ${data.firewall2Status} - ${data.firewall2Remarks}
+                  </div>
+                  <div class="log-detail">
+                    <i class="fas fa-mobile-alt"></i> <strong>HHT:</strong> ${data.hhtUp}/${data.hhtDown} - ${data.hhtRemarks}
+                  </div>
+                  <div class="log-detail">
+                    <i class="fas fa-satellite-dish"></i> <strong>GPS:</strong> ${data.GPS} - ${data.gpsRemarks}
+                  </div>
+                  <div class="log-detail">
+                    <i class="fas fa-wifi"></i> <strong>WAC:</strong> ${data.WAC} - ${data.wacRemarks}
+                  </div>
+                  <div class="log-detail">
+                    <i class="fas fa-plug"></i> <strong>UPS:</strong> ${data.UPS} - ${data.upsRemarks}
+                  </div>
+                  <div class="log-detail">
+                    <i class="fas fa-plug"></i> <strong>APS:</strong> ${data.apsUp}/${data.apsDown} - ${data.apsRemarks}
+                  </div>
+                  <div class="log-detail">
+                    <i class="fas fa-info-circle"></i> <strong>Other Remarks:</strong>
+                    <p>${data.otherRemarks}</p>
+                  </div>
+              `);
+            },
+            error: function (err) {
+              console.error("Error fetching log details:", err);
+              $("#logDetailsContainer").html(
+                '<p class="text-danger">Error loading log details. Please try again.</p>'
+              );
+            },
+          });
+        }
+
+        const { date, shift } = getQueryParams();
+        if (date && shift) {
+          loadLogDetails(date, shift);
+        } else {
+          $("#logDetailsContainer").html(
+            '<p class="text-danger">Invalid log details. Please check the URL parameters.</p>'
+          );
+        }
+
+        $("#addLogBtn").on("click", function () {
+          window.location.href = "addlog.html";
+        });
+      });
+    </script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

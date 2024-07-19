@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logbook</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-image: url(design4.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #333;
+        min-height: 100vh;
+      }
+
+      .container {
+        margin-top: 50px;
+        position: relative;
+      }
+      h1 {
+        color: #343a40;
+        text-align: center;
+      }
+      table {
+        border: 1px solid #ddd;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+        background-color: transparent !important;
+      }
+      th {
+        font-size: larger;
+      }
+      td {
+        font-size: large;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        margin: 0.5rem 0.5rem 0.5rem 0;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+        color: #fff;
+      }
+      .logo {
+        display: block;
+        margin: 0 auto 20px auto;
+        max-width: 120px;
+        height: auto;
+      }
+      .btn-secondary,
+      .btn-primary {
+        background-image: url(design5.png);
+        border: none;
+        margin-right: 20px;
+        color: rgb(255, 255, 255) !important;
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .logo-container img {
+        max-width: 100px;
+        margin-right: 10px;
+      }
+      .btn.editBtn {
+        background-color: #007bff;
+      }
+
+      .btn.editBtn:hover {
+        background-color: #0056b3;
+      }
+      .btn.removeBtn {
+        background-color: #dc3545;
+      }
+
+      .btn.removeBtn:hover {
+        background-color: #c82333;
+      }
+
+      @media (max-width: 991px) {
+        body {
+          background-size: auto 100%;
+          background-position: top center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="main-navbar">
+      <!-- Navigation content will be loaded here -->
+    </nav>
+    <div class="container">
+      <h1 class="mb-4 text-center">Logbook</h1>
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Shift</th>
+            <th>Shift Engineer</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="logTableBody"></tbody>
+      </table>
+
+      <div>
+        <button id="addLogBtn" class="btn btn-primary">Add New Log</button>
+        <button type="button" class="btn btn-secondary" onclick="goBack()">
+          Go Back
+        </button>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+      $(document).ready(function () {
+        function loadLogData() {
+          $.ajax({
+            url: "/api/logsheets",
+            method: "GET",
+            success: function (data) {
+              $("#logTableBody").empty();
+              data.forEach((log) => {
+                $("#logTableBody").append(`
+                                <tr>
+                                    <td>${log.log_date}</td>
+                                    <td>${log.shift}</td>
+                                    <td>${log.shift_engineer}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm editBtn"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-danger btn-sm removeBtn"><i class="fas fa-trash-alt"></i></button>
+                                        <button class="btn btn-info btn-sm viewDetailsBtn"><i class="fas fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                            `);
+              });
+            },
+            error: function (err) {
+              console.error("Error fetching logsheets:", err);
+            },
+          });
+        }
+        loadLogData();
+
+        $(document).on("click", ".editBtn", function () {
+          const row = $(this).closest("tr");
+          const rowData = {
+            log_date: row.find("td:eq(0)").text(),
+            shift: row.find("td:eq(1)").text(),
+            shift_engineer: row.find("td:eq(2)").text(),
+          };
+          const queryString = new URLSearchParams(rowData).toString();
+          window.location.href = `/editlog.html?${queryString}`;
+        });
+
+        $(document).on("click", ".removeBtn", function () {
+          const row = $(this).closest("tr");
+          const date = row.find("td:eq(0)").text();
+          const shift = row.find("td:eq(1)").text();
+          const formattedDate = new Date(date).toISOString().split("T")[0];
+          const encodedDate = encodeURIComponent(formattedDate);
+          const encodedShift = encodeURIComponent(shift);
+          if (
+            confirm(
+              `Are you sure you want to delete the log for ${formattedDate} - Shift ${shift}?`
+            )
+          ) {
+            $.ajax({
+              url: `/api/removelog/${encodedDate}/${encodedShift}`,
+              method: "DELETE",
+              success: function (response) {
+                row.remove();
+                alert("Log removed successfully.");
+              },
+              error: function (err) {
+                console.error("Error deleting log:", err);
+                alert("Error deleting log. Please try again later.");
+              },
+            });
+          }
+        });
+        document
+          .getElementById("addLogBtn")
+          .addEventListener("click", function () {
+            window.location.href = "addlog.html";
+          });
+      });
+      $(document).on("click", ".viewDetailsBtn", function () {
+        const row = $(this).closest("tr");
+        const rowData = {
+          date: row.find("td:eq(0)").text(),
+          shift: row.find("td:eq(1)").text(),
+        };
+        const queryString = new URLSearchParams(rowData).toString();
+        window.location.href = `/viewlogdetails.html?${queryString}`;
+      });
+    </script>
+  </body>
+</html>

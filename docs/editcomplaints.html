@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Complaint</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      .container {
+        max-width: 600px !important;
+        width: 100%;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #f1f1f1;
+        border-radius: 5px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+        background-color: transparent;
+      }
+      label {
+        font-weight: bold;
+      }
+      body {
+        background-image: url(design4.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .button {
+        margin: 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="main-navbar">
+      <!-- Navigation content will be loaded here -->
+    </nav>
+    <div class="container">
+      <h1 class="mb-4 text-center">Edit Complaint</h1>
+      <form id="editComplaintForm">
+        <input type="hidden" id="complaintId" name="complaintId" value="" />
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="date"
+            name="date"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="shift">Shift</label>
+          <input
+            type="text"
+            class="form-control"
+            id="shift"
+            name="shift"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="complaintDescription">Complaint Description</label>
+          <textarea
+            class="form-control"
+            id="complaintDescription"
+            name="complaintDescription"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="reportedDate">Reported Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="reportedDate"
+            name="reportedDate"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="reportedTime">Reported Time</label>
+          <input
+            type="time"
+            class="form-control"
+            id="reportedTime"
+            name="reportedTime"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="actionTaken">Action Taken</label>
+          <textarea
+            class="form-control"
+            id="actionTaken"
+            name="actionTaken"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="closeDate">Close Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="closeDate"
+            name="closeDate"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="closeTime">Close Time</label>
+          <input
+            type="time"
+            class="form-control"
+            id="closeTime"
+            name="closeTime"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="complaintStatus">Complaint Status</label>
+          <select
+            class="form-control"
+            id="complaintStatus"
+            name="complaintStatus"
+            required
+          >
+            <option value="new">New</option>
+            <option value="open">Open</option>
+            <option value="close">Close</option>
+          </select>
+        </div>
+        <div class="button">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button
+            type="button"
+            class="btn btn-warning btn-clear"
+            onclick="clearForm()"
+          >
+            Clear Form
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="goBack()">
+            Go Back
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+      $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const complaintDate = urlParams.get("date");
+        const complaintShift = urlParams.get("shift");
+
+        if (complaintDate && complaintShift) {
+          fetchComplaintData(complaintDate, complaintShift);
+        } else {
+          alert("Error: No complaint date or shift provided");
+        }
+
+        function fetchComplaintData(date, shift) {
+          $.ajax({
+            url: `/api/complaintdetails?date=${encodeURIComponent(
+              date
+            )}&shift=${encodeURIComponent(shift)}`,
+            method: "GET",
+            success: function (data) {
+              populateForm(data);
+            },
+            error: function (xhr, status, error) {
+              alert("Error fetching complaint details. Please try again.");
+            },
+          });
+        }
+
+        function populateForm(data) {
+          const complaintData = Array.isArray(data) ? data[0] : data;
+
+          if (!complaintData) {
+            alert("Error: No complaint data found");
+            return;
+          }
+
+          const fieldMapping = {
+            date: "date",
+            shift: "shift",
+            complaintDescription: "complaintDescription",
+            reportedDate: "reportedDate",
+            reportedTime: "reportedTime",
+            actionTaken: "actionTaken",
+            closeDate: "closeDate",
+            closeTime: "closeTime",
+            complaintStatus: "complaintStatus",
+          };
+
+          Object.entries(fieldMapping).forEach(([dataField, formId]) => {
+            const value = complaintData[dataField] || "";
+            setFieldValue(`#${formId}`, value);
+          });
+        }
+
+        function setFieldValue(selector, value) {
+          const element = $(selector);
+          if (element.length) {
+            if (element.is("select")) {
+              element.val(value.toLowerCase());
+            } else if (element.attr("type") === "date") {
+              element.val(value.split("T")[0]);
+            } else {
+              element.val(value);
+            }
+          }
+        }
+
+        $("#editComplaintForm").on("submit", function (e) {
+          e.preventDefault();
+
+          const formData = {
+            id: $("#complaintId").val(),
+            date: formatDate($("#date").val()),
+            shift: $("#shift").val(),
+            complaintDescription: $("#complaintDescription").val(),
+            reportedDate: formatDate($("#reportedDate").val()),
+            reportedTime: formatTime($("#reportedTime").val()),
+            actionTaken: $("#actionTaken").val(),
+            closeDate: formatDate($("#closeDate").val()),
+            closeTime: formatTime($("#closeTime").val()),
+            complaintStatus: $("#complaintStatus").val(),
+          };
+
+          $.ajax({
+            url: "/api/updatecomplaint",
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            success: function (response) {
+              alert("Complaint updated successfully");
+              window.location.href = "/complaintslog.html";
+            },
+            error: function (xhr, status, error) {
+              alert("Error updating complaint. Please try again later.");
+            },
+          });
+        });
+
+        function formatDate(dateString) {
+          return new Date(dateString).toISOString().split("T")[0];
+        }
+
+        function formatTime(timeString) {
+          return timeString;
+        }
+      });
+
+      function goBack() {
+        window.history.back();
+      }
+
+      function clearForm() {
+        $("#editComplaintForm")[0].reset();
+      }
+    </script>
+  </body>
+</html>

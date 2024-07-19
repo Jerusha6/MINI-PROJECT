@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Form</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-image: url(design5.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 50px 0;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: inherit;
+        background-repeat: inherit;
+        background-size: inherit;
+        filter: blur(5px);
+        z-index: -1;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 25px;
+        border: 1px solid #f1f1f1;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.212);
+        background-color: rgba(255, 255, 255, 0.9);
+        position: relative;
+        z-index: 1;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="email"],
+      input[type="tel"],
+      select {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 22px;
+        border: none;
+        background: #f1f1f1;
+      }
+
+      input:focus,
+      select:focus {
+        background-color: #ddd;
+        outline: none;
+      }
+
+      .registerbtn {
+        background-color: #04aa6d;
+        color: white;
+        padding: 16px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+      }
+      .logo {
+        display: block;
+        margin: 0 auto 20px auto;
+        max-width: 150px;
+        height: auto;
+      }
+      .registerbtn:hover {
+        opacity: 1;
+      }
+
+      a {
+        color: dodgerblue;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("form");
+        const submitButton = document.querySelector(".registerbtn");
+
+        form.addEventListener("submit", () => {
+          submitButton.disabled = true;
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <form action="/api/register" method="post">
+      <div class="container">
+        <img src="RINL.jpg" alt="Logo" class="logo" />
+        <h1 class="text-center">Register</h1>
+        <p class="text-center">
+          Please fill in this form to create an account.
+        </p>
+        <hr />
+        <input type="text" name="fname" placeholder="First Name" required />
+        <input type="text" name="lname" placeholder="Last Name" required />
+        <input
+          type="tel"
+          id="contact"
+          name="contact"
+          maxlength="10"
+          pattern="[0-9]{10}"
+          placeholder="Contact"
+          required
+        />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          required
+        />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])\S{8,}$"
+          title="Password must contain at least one number, one alphabet, one symbol, and be at least 8 characters long"
+          placeholder="Password"
+          required
+        />
+        <input
+          type="password"
+          id="repassword"
+          name="repassword"
+          placeholder="Re-type Password"
+          required
+        />
+        <select id="gender" name="gender" required>
+          <option value="m">Male</option>
+          <option value="f">Female</option>
+          <option value="o">Other</option>
+        </select>
+        <hr />
+        <p class="text-center">
+          By creating an account you agree to our
+          <a href="#">Terms & Privacy</a>.
+        </p>
+        <button type="submit" class="btn btn-primary registerbtn">
+          Register
+        </button>
+        <p class="text-center">
+          Already have an account? <a href="signin.html">Sign in</a>.
+        </p>
+      </div>
+    </form>
+  </body>
+</html>

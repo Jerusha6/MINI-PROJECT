@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complaints</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <style>
+      .container {
+        max-width: 600px !important;
+        width: 100%;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #f1f1f1;
+        border-radius: 5px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+        background-color: transparent;
+      }
+      body {
+        background-image: url(design4.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      label{
+        font-weight: bold;
+      }
+      .btn-secondary {
+        margin-right: 380px;
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="main-navbar">
+      <!-- Navigation content will be loaded here -->
+    </nav>
+    <div class="container">
+      <h1 class="mb-4 text-center">Complaints</h1>
+      <form id="logForm" action="/submit-complaint" method="post">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="date"
+            name="date"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="shift">Shift</label>
+          <select class="form-control" id="shift" name="shift" required>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="G">G</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="complaintDescription">Complaint Description</label>
+          <textarea
+            name="complaintDescription"
+            id="complaintDescription"
+            class="form-control"
+          ></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="reportedTime">Reported Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="reportedDate"
+              name="reportedDate"
+              required
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="reportedTime">Reported Time</label>
+            <input
+              type="time"
+              class="form-control"
+              id="reportedTime"
+              name="reportedTime"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="actionTaken">Action Taken</label>
+          <textarea
+            name="actionTaken"
+            id="actionTaken"
+            class="form-control"
+          ></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="closeDate">Close Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="closeDate"
+              name="closeDate"
+              required
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="closeTime">Close Time</label>
+            <input
+              type="time"
+              class="form-control"
+              id="closeTime"
+              name="closeTime"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="complaintStatus">Complaint Status</label>
+          <select
+            class="form-control"
+            name="complaintStatus"
+            id="complaintStatus"
+            required
+          >
+            <option value="">SELECT STATUS</option>
+            <option value="open">NEW</option>
+            <option value="open">OPEN</option>
+            <option value="close">CLOSE</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-secondary" onclick="goBack()">
+          Go Back
+        </button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

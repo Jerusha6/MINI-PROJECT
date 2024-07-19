@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Main Menu - Professional Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" z/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url(design4.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Poppins', sans-serif;
+            color: #d2a8a8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex-grow: 1;
+            display: flex;
+            margin-top: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-body {
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .card-text {
+            color: #34495e;
+            font-size: 0.9rem;
+        }
+
+     .btn-primary {
+            background-image: url(design2.png);
+            border: none !important;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .icon-bg {
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            font-size: 8rem;
+            color: rgba(52, 152, 219, 0.1);
+            transform: rotate(30deg);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .icon-bg {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <nav id="main-navbar"></nav>
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div>
+                            <i class="fas fa-book-open card-icon"></i>
+                            <h5 class="card-title">Log Book</h5>
+                            <p class="card-text">Efficiently manage and track your daily logs with ease.</p>
+                        </div>
+                        <a href="logbook.html" class="btn btn-primary mt-3">Access Log Book</a>
+                        <i class="fas fa-book icon-bg"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div>
+                            <i class="fas fa-exclamation-circle card-icon text-warning"></i>
+                            <h5 class="card-title">Complaints</h5>
+                            <p class="card-text">Submit, track, and resolve complaints seamlessly.</p>
+                        </div>
+                        <a href="complaintslog.html" class="btn btn-primary mt-3">Manage Complaints</a>
+                        <i class="fas fa-comments icon-bg"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- You can add this Reports card in future if required -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div>
+                            <i class="fas fa-chart-line card-icon text-success"></i>
+                            <h5 class="card-title">Reports</h5>
+                            <p class="card-text">Generate insightful reports and analytics at your fingertips.</p>
+                        </div>
+                        <a href="reports.html" class="btn btn-primary mt-3">View Reports</a>
+                        <i class="fas fa-chart-pie icon-bg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

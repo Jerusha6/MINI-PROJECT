@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logsheet</title>
+    <style>
+      body {
+        background-image: url(design4.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .container {
+        max-width: 600px !important;
+        width: 100%;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #f1f1f1;
+        border-radius: 5px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+        background-color: transparent;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      label {
+        font-weight: bold;
+      }
+      @media (max-width: 991px) {
+        .btn {
+          display: flex;
+        }
+      }
+
+      .remarksContainer {
+        display: none;
+      }
+
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .form-row > .form-group {
+        flex: 1;
+        min-width: 48%;
+        max-width: 48%;
+      }
+
+      @media (max-width: 575.98px) {
+        .form-row > .form-group {
+          min-width: 100%;
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="main-navbar">
+      <!-- Navigation content will be loaded here -->
+    </nav>
+    <div class="container">
+      <h1 class="mb-4 text-center">Logsheet</h1>
+      <form id="logForm" action="/submit" method="post">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="date"
+            name="date"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="shift">Shift</label>
+          <select class="form-control" id="shift" name="shift" required>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="G">G</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="shift_engineer">Shift Engineer</label>
+          <input
+            type="text"
+            class="form-control"
+            id="shift_engineer"
+            name="shift_engineer"
+            placeholder="Enter your name"
+          />
+        </div>
+        <div class="form-group">
+          <h5><b>Hard Disk Data</b></h5>
+          <select id="appserver" name="appserver" class="form-control">
+            <option value="">App Server Status</option>
+            <option value="OK">OK</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="appserver-remarks">Remarks</label>
+            <textarea
+              class="form-control"
+              name="appserverRemarks"
+              id="appserver-remarks"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <select id="dbserver" name="dbserver" class="form-control">
+            <option value="">DB Server Status</option>
+            <option value="OK">OK</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="dbserver-remarks">Remarks</label>
+            <textarea
+              class="form-control"
+              name="dbserverRemarks"
+              id="dbserver-remarks"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="firewall-status-1">Firewall 1 Status</label>
+          <select
+            id="firewall-status-1"
+            name="firewall1Status"
+            class="form-control"
+          >
+            <option value="">Firewall-1</option>
+            <option value="OK">OK</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="firewall-1-remarks">Remarks</label>
+            <textarea
+              class="form-control"
+              name="firewall1Remarks"
+              id="firewall-1-remarks"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="firewall-status-2">Firewall 2 Status</label>
+          <select
+            id="firewall-status-2"
+            name="firewall2Status"
+            class="form-control"
+          >
+            <option value="">Firewall-2</option>
+            <option value="OK">OK</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="firewall-2-remarks">Remarks</label>
+            <textarea
+              class="form-control"
+              name="firewall2Remarks"
+              id="firewall-2-remarks"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <h5><b>HHTs status</b></h5>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="hht-up">UP:</label>
+              <select class="form-control" id="hht-up" name="hhtUp"></select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="hht-down">DOWN:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="hht-down"
+                name="hhtDown"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <h5><b>Total:</b></h5>
+            <span id="hht-total">28</span>
+          </div>
+          <div class="remarksContainer" id="hht-remarks-container">
+            <label for="hht-remarks">Remarks</label>
+            <textarea
+              class="form-control"
+              id="hht-remarks"
+              name="hhtRemarks"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="GPS">GPS Device status</label>
+          <select class="form-control" name="GPS" id="GPS">
+            <option value="">Select Status</option>
+            <option value="OK">OK</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="gps-remarks">Remarks</label>
+            <textarea
+              class="form-control"
+              name="gpsRemarks"
+              id="gps-remarks"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="WAC">Windows ACs status</label>
+          <select class="form-control" name="WAC" id="WAC">
+            <option value="">Select Status</option>
+            <option value="OK">OK</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="wac-remarks">Remarks</label>
+            <textarea
+              class="form-control"
+              name="wacRemarks"
+              id="wac-remarks"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="UPS">UPS Device status</label>
+          <select class="form-control" name="UPS" id="UPS">
+            <option value="">Select Status</option>
+            <option value="OK">OK</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="ups-remarks">Remarks</label>
+            <textarea
+              class="form-control"
+              name="upsRemarks"
+              id="ups-remarks"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <h5><b>Access Point Status</b></h5>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="aps-up">UP:</label>
+              <select class="form-control" id="aps-up" name="apsUp"></select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="aps-down">DOWN:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="aps-down"
+                name="apsDown"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <h5><b>Total:</b></h5>
+            <span id="aps-total">28</span>
+          </div>
+          <div class="remarksContainer" id="aps-remarks-container">
+            <label for="aps-remarks">Remarks</label>
+            <textarea
+              class="form-control"
+              id="aps-remarks"
+              name="apsRemarks"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea
+            class="form-control"
+            name="otherRemarks"
+            id="other-remarks"
+            rows="3"
+            placeholder="Any Other Information"
+          ></textarea>
+        </div>
+        <div class="btn">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="button" class="btn btn-secondary" onclick="goBack()">
+            Go Back
+          </button>
+        </div>
+      </form>
+    </div>
+    <script src="js/script.js"></script>
+    <script>
+      function toggleRemarks(selectElement) {
+        const remarksContainer = selectElement
+          .closest(".form-group")
+          .querySelector(".remarksContainer");
+        remarksContainer.style.display =
+          selectElement.value === "NOT OK" ? "block" : "none";
+      }
+      function toggleRemarksHHT() {
+        const hhtUp = document.getElementById("hht-up");
+        const hhtRemarksContainer = document.getElementById(
+          "hht-remarks-container"
+        );
+        hhtRemarksContainer.style.display =
+          parseInt(hhtUp.value) < 28 ? "block" : "none";
+      }
+      function toggleRemarksAPS() {
+        const apsUp = document.getElementById("aps-up");
+        const apsRemarksContainer = document.getElementById(
+          "aps-remarks-container"
+        );
+        apsRemarksContainer.style.display =
+          parseInt(apsUp.value) < 28 ? "block" : "none";
+      }
+      function populateOptions() {
+        const upSelects = document.querySelectorAll('select[id$="-up"]');
+        upSelects.forEach((upSelect) => {
+          for (let i = 0; i <= 28; i++) {
+            const option = document.createElement("option");
+            option.value = i;
+            option.textContent = i;
+            upSelect.appendChild(option);
+          }
+        });
+      }
+      function updateDown(selectElement) {
+        const upValue = parseInt(selectElement.value);
+        const downInput =
+          selectElement.parentElement.nextElementSibling.querySelector("input");
+        downInput.value = 28 - upValue;
+      }
+      document
+        .getElementById("firewall-status-1")
+        .addEventListener("change", function () {
+          toggleRemarks(this);
+        });
+      document
+        .getElementById("appserver")
+        .addEventListener("change", function () {
+          toggleRemarks(this);
+        });
+      document
+        .getElementById("dbserver")
+        .addEventListener("change", function () {
+          toggleRemarks(this);
+        });
+      document
+        .getElementById("firewall-status-2")
+        .addEventListener("change", function () {
+          toggleRemarks(this);
+        });
+      document.getElementById("GPS").addEventListener("change", function () {
+        toggleRemarks(this);
+      });
+      document.getElementById("WAC").addEventListener("change", function () {
+        toggleRemarks(this);
+      });
+      document.getElementById("UPS").addEventListener("change", function () {
+        toggleRemarks(this);
+      });
+      document.getElementById("hht-up").addEventListener("change", function () {
+        updateDown(this);
+        toggleRemarksHHT();
+      });
+      document.getElementById("aps-up").addEventListener("change", function () {
+        updateDown(this);
+        toggleRemarksAPS();
+      });
+      window.onload = populateOptions;
+    </script>
+  </body>
+</html>

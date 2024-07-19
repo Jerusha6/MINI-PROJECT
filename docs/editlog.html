@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Log</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+
+    <style>
+      body {
+         background-image: url(design4.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+      }
+      .container {
+        max-width: 600px !important;
+        width: 100%;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #f1f1f1;
+        border-radius: 5px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+        background-color: transparent;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      label {
+        font-weight: bold;
+      }
+
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .form-row > .form-group {
+        flex: 1;
+        min-width: 100%;
+        max-width: 100%;
+      }
+      .button {
+        margin: 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      @media (min-width: 576px) {
+        .form-row > .form-group {
+          min-width: 48%;
+          max-width: 48%;
+        }
+      }
+      @media (max-width: 575.98px) {
+        .form-row > .form-group {
+          min-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="main-navbar">
+      <!-- Navigation content will be loaded here -->
+    </nav>
+    <div class="container">
+      <h1 class="mb-4 text-center">Edit Log</h1>
+      <form id="editLogForm">
+        <div class="form-group">
+          <label for="log_date">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="log_date"
+            name="log_date"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="shift">Shift</label>
+          <input
+            type="text"
+            class="form-control"
+            id="shift"
+            name="shift"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="shift_engineer">Shift Engineer</label>
+          <input
+            type="text"
+            class="form-control"
+            id="shift_engineer"
+            name="shift_engineer"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="app_server_status">App Server Status</label>
+          <select
+            class="form-control"
+            id="app_server_status"
+            name="app_server_status"
+          >
+            <option value="Ok">Ok</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="app_server_remarks">App Server Remarks</label>
+            <textarea
+              class="form-control"
+              id="app_server_remarks"
+              name="app_server_remarks"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="db_server_status">DB Server Status</label>
+          <select
+            class="form-control"
+            id="db_server_status"
+            name="db_server_status"
+          >
+            <option value="Ok">Ok</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="db_server_remarks">DB Server Remarks</label>
+            <textarea
+              class="form-control"
+              id="db_server_remarks"
+              name="db_server_remarks"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="firewall1_status">Firewall 1 Status</label>
+          <select
+            class="form-control"
+            id="firewall1_status"
+            name="firewall1_status"
+          >
+            <option value="Ok">Ok</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="firewall1_remarks">Firewall 1 Remarks</label>
+            <textarea
+              class="form-control"
+              id="firewall1_remarks"
+              name="firewall1_remarks"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="firewall2_status">Firewall 2 Status</label>
+          <select
+            class="form-control"
+            id="firewall2_status"
+            name="firewall2_status"
+          >
+            <option value="Ok">Ok</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="firewall2_remarks">Firewall 2 Remarks</label>
+            <textarea
+              class="form-control"
+              id="firewall2_remarks"
+              name="firewall2_remarks"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="hht_up">HHT UP</label>
+          <select class="form-control" id="hht_up" name="hht_up"></select>
+          <div id="hht_remarks_container" class="remarksContainer">
+            <label for="hht_remarks">HHT Remarks</label>
+            <textarea
+              class="form-control"
+              id="hht_remarks"
+              name="hht_remarks"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="gps_status">GPS Status</label>
+          <select class="form-control" id="gps_status" name="gps_status">
+            <option value="Ok">Ok</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="gps_remarks">GPS Remarks</label>
+            <textarea
+              class="form-control"
+              id="gps_remarks"
+              name="gps_remarks"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="wac_status">WAC Status</label>
+          <select class="form-control" id="wac_status" name="wac_status">
+            <option value="Ok">Ok</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="wac_remarks">WAC Remarks</label>
+            <textarea
+              class="form-control"
+              id="wac_remarks"
+              name="wac_remarks"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ups_status">UPS Status</label>
+          <select class="form-control" id="ups_status" name="ups_status">
+            <option value="Ok">Ok</option>
+            <option value="NOT OK">NOT OK</option>
+          </select>
+          <div class="remarksContainer">
+            <label for="ups_remarks">UPS Remarks</label>
+            <textarea
+              class="form-control"
+              id="ups_remarks"
+              name="ups_remarks"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="aps_up">APS UP</label>
+          <select class="form-control" id="aps_up" name="aps_up"></select>
+          <div id="aps_remarks_container" class="remarksContainer">
+            <label for="aps_remarks">APS Remarks</label>
+            <textarea
+              class="form-control"
+              id="aps_remarks"
+              name="aps_remarks"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="other_remarks">Other Remarks</label>
+          <textarea
+            class="form-control"
+            id="other_remarks"
+            name="other_remarks"
+          ></textarea>
+        </div>
+        <div class="button">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button
+            type="button"
+            class="btn btn-warning btn-clear"
+            onclick="clearForm()"
+          >
+            Clear Form
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="goBack()">
+            Go Back
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const logDate = urlParams.get("log_date");
+        const shift = urlParams.get("shift");
+
+        // Populate HHT and APS dropdowns
+        populateDropdown("#hht_up", 28);
+        populateDropdown("#aps_up", 28);
+
+        // Fetch existing data
+        $.ajax({
+          url: `/api/logs/${logDate}/${shift}`,
+          method: "GET",
+          success: populateForm,
+          error: function (err) {
+            alert("Error fetching log data. Loading empty form.");
+            populateForm({});
+          },
+        });
+
+        function populateForm(data) {
+          setFieldValue("#log_date", data.log_date || logDate);
+          setFieldValue("#shift", data.shift || shift);
+          setFieldValue("#shift_engineer", data.shift_engineer || "");
+
+          const fields = [
+            "app_server_status",
+            "db_server_status",
+            "firewall1_status",
+            "firewall2_status",
+            "hht_up",
+            "gps_status",
+            "wac_status",
+            "ups_status",
+            "aps_up",
+          ];
+
+          fields.forEach((field) => {
+            setFieldValue(`#${field}`, data[field]);
+            const remarksField = `${field
+              .replace("_status", "")
+              .replace("_up", "")}_remarks`;
+            setFieldValue(`#${remarksField}`, data[remarksField] || "");
+          });
+
+          setFieldValue("#other_remarks", data.other_remarks || "");
+          $(".remarksContainer").show();
+        }
+
+        function setFieldValue(selector, value) {
+          const element = $(selector);
+          if (element.length) {
+            if (element.is("select")) {
+              const lowercaseValue = String(value).toLowerCase();
+              element.find("option").prop("selected", function () {
+                return this.value.toLowerCase() === lowercaseValue;
+              });
+            } else {
+              element.val(value);
+            }
+          }
+        }
+
+        function populateDropdown(selector, max) {
+          const dropdown = $(selector);
+          for (let i = 0; i <= max; i++) {
+            dropdown.append($("<option>", { value: i, text: i }));
+          }
+        }
+
+        $("#editLogForm").on("submit", function (e) {
+          e.preventDefault();
+
+          const formData = {
+            log_date: $("#log_date").val(),
+            shift: $("#shift").val(),
+            shift_engineer: $("#shift_engineer").val(),
+          };
+
+          const fields = [
+            "app_server_status",
+            "db_server_status",
+            "firewall1_status",
+            "firewall2_status",
+            "hht_up",
+            "gps_status",
+            "wac_status",
+            "ups_status",
+            "aps_up",
+          ];
+
+          fields.forEach((field) => {
+            formData[field] = $(`#${field}`).val() || null;
+            const remarksField = `${field
+              .replace("_status", "")
+              .replace("_up", "")}_remarks`;
+            formData[remarksField] = $(`#${remarksField}`).val() || "";
+          });
+
+          formData["other_remarks"] = $("#other_remarks").val() || "";
+
+          $.ajax({
+            url: "/api/updatelog",
+            method: "PUT",
+            data: formData,
+            success: function (response) {
+              alert("Log updated successfully");
+              window.location.href = "/logbook.html";
+            },
+            error: function (err) {
+              alert("Error updating log. Please try again later.");
+            },
+          });
+        });
+
+        // Attach event listeners to all fields that need to manage remarks
+        $("select").on("change", function () {
+          const fieldName = $(this).attr("id");
+          const remarksField = `#${fieldName
+            .replace("_status", "")
+            .replace("_up", "")}_remarks`;
+
+          if (fieldName === "hht_up" || fieldName === "aps_up") {
+            const value = parseInt($(this).val());
+            if (value >= 28) {
+              $(remarksField).val("");
+            }
+          }
+        });
+      });
+
+      function goBack() {
+        window.history.back();
+      }
+
+      function clearForm() {
+        $("#editLogForm")[0].reset();
+      }
+    </script>
+  </body>
+</html>

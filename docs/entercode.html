@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enter Code</title>
+     <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #f8f9fa;
+      }
+      .main-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+      }
+      .container {
+        max-width: 400px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        background: #f8f9fa;
+        transition: background-color 0.3s, border-color 0.3s;
+      }
+      input[type="text"]:focus {
+        background-color: #fff;
+        border-color: #80bdff;
+        outline: none;
+      }
+      .btn-primary {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #007bff;
+        border: none;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+      .btn-primary:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+      }
+      .form-title {
+        font-weight: bold;
+        color: #343a40;
+        margin-bottom: 20px;
+      }
+      .link {
+        margin-top: 15px;
+        color: #007bff;
+      }
+      .link:hover {
+        text-decoration: underline;
+        color: #0056b3;
+      }
+      #main-navbar {
+        align-self: flex-end;
+        width: 100%;
+      }
+      .navbar-nav {
+        margin-left: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-content">
+      <form action="http://localhost:3000/entercode" method="post">
+        <div class="container">
+          <h2 class="form-title text-center">Enter Code</h2>
+          <input
+            type="text"
+            id="code"
+            name="code"
+            placeholder="Enter the code"
+            required
+          />
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <div class="text-center link">
+            <a href="signin.html">Back to login</a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("form").on("submit", function (e) {
+          e.preventDefault();
+
+          const code = $("#code").val();
+
+          $.ajax({
+            url: "/api/verify-code",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ code: code }),
+            success: function (response) {
+              alert(
+                "Code verified successfully. You can now reset your password."
+              );
+              window.location.href = "/reset.html";
+            },
+            error: function (xhr, status, error) {
+              alert("Error: " + xhr.responseJSON.error);
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

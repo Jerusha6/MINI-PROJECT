@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Reset Success</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #f8f9fa;
+      }
+      .main-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+      }
+      .container {
+        max-width: 450px !important;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+      .container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+      }
+      .success-icon {
+        font-size: 50px;
+        color: #28a745;
+        margin-bottom: 20px;
+        animation: bounceIn 1s;
+      }
+      .form-title {
+        font-weight: bold;
+        color: #343a40;
+        margin-bottom: 20px;
+        animation: fadeInDown 1s;
+      }
+      .btn-primary {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #007bff;
+        border: none;
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+      }
+      #main-navbar {
+        align-self: flex-end;
+        width: 100%;
+      }
+      .navbar-nav {
+        margin-left: auto;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translate3d(0, 40px, 0);
+        }
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+      .fade-in-up {
+        animation: fadeInUp 0.5s ease-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-content">
+      <div class="container animate__animated animate__fadeIn">
+        <div class="success-icon animate__animated animate__bounceIn">
+          &#10004;
+          <!-- This is the tick mark symbol -->
+        </div>
+        <h2 class="form-title animate__animated animate__fadeInDown">
+          Password Reset Successful
+        </h2>
+        <p class="animate__animated animate__fadeInUp">
+          Your new password has been set successfully.
+        </p>
+        <a
+          href="signin.html"
+          class="btn btn-primary animate__animated animate__fadeInUp"
+          >Back to Login</a
+        >
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
