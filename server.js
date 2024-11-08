@@ -6,6 +6,7 @@ const db = require("./db");
 const bcrypt = require("bcrypt");
 const moment = require("moment-timezone");
 const session = require("express-session");
+const cors = require('cors');
 const router = express.Router();
 const port = 3000;
 
@@ -15,6 +16,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "docs"));
 app.disable("etag");
+
+app.use(cors({
+  origin: 'https://Jerusha6.github.io',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 
 app.post("/api/register", async (req, res) => {
   const { fname, lname, contact, email, password, repassword, gender } =
